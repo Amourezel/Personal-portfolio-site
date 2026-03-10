@@ -25,6 +25,7 @@ const paths = {
   rasterImages: "src/img/**/*.{jpg,jpeg,png,webp}",
   allImages: "src/img/**/*.{jpg,jpeg,png,webp,gif,svg}",
   staticImages: "src/img/**/*.{gif,svg}",
+  files: "src/files/**/*.*",
 };
 
 const reload = (done) => {
@@ -151,6 +152,12 @@ function imagesBuildWebp() {
     .pipe(gulp.dest("dist/img"));
 }
 
+function filesBuild() {
+  return gulp
+    .src(paths.files, { encoding: false })
+    .pipe(gulp.dest("dist/files"));
+}
+
 const imagesBuild = gulp.parallel(imagesBuildOriginals, imagesBuildWebp);
 
 function watchFiles() {
@@ -166,6 +173,7 @@ const buildAssets = gulp.parallel(
   scriptsBuild,
   htmlBuild,
   imagesBuild,
+  filesBuild
 );
 
 gulp.task("server", server);
